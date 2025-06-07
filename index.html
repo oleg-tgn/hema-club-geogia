@@ -1,11 +1,207 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hema</title>
+    <title>Saint George's HEMA School</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
+    />
+    <style>
+      body {
+        font-family: "Merriweather", serif;
+      }
+    </style>
   </head>
-  <body>
-    HEMA CLUB
+  <body class="bg-gray-50 text-gray-800">
+    <section
+      class="text-white py-20 relative bg-cover bg-center bg-no-repeat"
+      style="background-image: url('/images/hero.jpg')"
+    >
+      <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+      <div
+        class="relative z-10 flex items-center justify-center h-full text-center text-white px-4"
+      >
+        <div>
+          <h1 class="text-4xl md:text-6xl font-bold mb-4">
+            Saint George's HEMA School
+          </h1>
+          <p class="text-xl mb-6">Historical European Martial Arts (HEMA)</p>
+          <a
+            href="https://ig.me/m/st.george_hema_school"
+            class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded transition"
+            target="_blank"
+            >Join</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">About</h2>
+        <p class="text-lg max-w-2xl mx-auto">
+          We practice Historical European Martial Arts (HEMA). Historical
+          fencing is a type of martial art distinguished by its specificity -
+          the use of replicas of historical weaponry, similar in size, weight,
+          and other characteristics to the originals, as well as the study of
+          techniques from European martial arts passed down to us by masters of
+          Medieval, Renaissance, and Modern times, such as Johannes
+          Liechtenauer, Fiore dei Liberi, Camillo Agrippa, Alfred&nbsp;Hutton,
+          and many others.
+        </p>
+      </div>
+    </section>
+
+    <section class="bg-gray-100 py-16">
+      <div class="max-w-4xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-10">Training</h2>
+        <div class="grid md:grid-cols-2 gap-x-2 gap-y-6 items-start">
+          <div>
+            <h3 class="text-xl font-semibold mb-2">Schedule</h3>
+            <table class="table-auto">
+              <tr>
+                <th rowspan="2" class="border px-4 py-2">Tuesday</th>
+                <td class="border px-4 py-2">Saber</td>
+                <td class="border px-4 py-2">19:00 - 20:30</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">Longsword</td>
+                <td class="border px-4 py-2">20:30 - 22:00</td>
+              </tr>
+              <tr>
+                <th rowspan="2" class="border px-4 py-2">Thursday</th>
+                <td class="border px-4 py-2">Saber</td>
+                <td class="border px-4 py-2">19:00 - 20:30</td>
+              </tr>
+              <tr>
+                <td class="border px-4 py-2">Longsword</td>
+                <td class="border px-4 py-2">20:30 - 22:00</td>
+              </tr>
+              <tr>
+                <th rowspan="2" class="border px-4 py-2">Sunday</th>
+                <td class="border px-4 py-2">Mix</td>
+                <td class="border px-4 py-2">11:00 - 14:00</td>
+              </tr>
+            </table>
+          </div>
+          <div>
+            <h3 class="text-xl font-semibold mb-2">What do we fence with?</h3>
+            <p class="mb-2">
+              Currently, we conduct training in four types of weapons:
+            </p>
+            <ul class="list-disc pl-5">
+              <li>
+                Longsword, also known as the "Federschwert" in the German
+                tradition;
+              </li>
+              <li>
+                Italian rapier, as well as rapier and dagger (dagger for the
+                off-hand);
+              </li>
+              <li>Military saber of the 19th century;</li>
+              <li>Sword and shield (buckler) of the 13th century.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-6">Photo</h2>
+        <div class="swiper mySwiper max-w-5xl mx-auto">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="aspect-[16/9] w-full overflow-hidden rounded shadow">
+                <img
+                  src="/images/training1.jpg"
+                  alt="training"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="aspect-[16/9] w-full overflow-hidden rounded shadow">
+                <img
+                  src="/images/training2.jpg"
+                  alt="training"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="aspect-[16/9] w-full overflow-hidden rounded shadow">
+                <img
+                  src="/images/training3.jpg"
+                  alt="training"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="aspect-[16/9] w-full overflow-hidden rounded shadow">
+                <img
+                  src="/images/training4.jpg"
+                  alt="training"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination mt-4"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="w-full">
+      <div class="relative w-full h-[300px] group">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d744.6156340035722!2d44.80343762855536!3d41.71053699819631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440d872b0021d1%3A0x8543fa4cb63dfe7c!2zRGFuY2Ug4YOq4YOU4YOZ4YOV4YOQIHN0dWRpbyB0YmlsaXNpIGhpcCBob3A!5e0!3m2!1sru!2sge!4v1749320896973!5m2!1sru!2sge"
+          class="absolute top-0 left-0 w-full h-full pointer-events-none group-hover:pointer-events-auto"
+          style="border: 0"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+    </section>
+
+    <section id="contact" class="bg-gray-900 text-white py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Contact us</h2>
+        <p class="mb-4">
+          37 Giorgi Chitaia St, Tbilisi<br />
+          <img
+            src="/images/inst.svg"
+            alt="instagram"
+            class="inline-block w-5 h-5 mr-2"
+          />
+          <a
+            href="https://instagram.com/st.george_hema_school"
+            class="text-red-400 hover:underline"
+            target="_blank"
+            >st.george_hema_school</a
+          >
+        </p>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".mySwiper", {
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+      });
+    </script>
   </body>
 </html>
