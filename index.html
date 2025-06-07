@@ -13,11 +13,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
     />
-    <style>
-      body {
-        font-family: "Merriweather", serif;
-      }
-    </style>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body class="bg-gray-50 text-gray-800">
     <section
@@ -156,6 +152,8 @@
             </div>
           </div>
           <div class="swiper-pagination mt-4"></div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
       </div>
     </section>
@@ -200,6 +198,10 @@
         pagination: {
           el: ".swiper-pagination",
           clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
         },
       });
     </script>
