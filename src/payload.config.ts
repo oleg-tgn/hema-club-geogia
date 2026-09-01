@@ -21,6 +21,9 @@ export default buildConfig({
   },
   collections: [Users, Media, Weapons, ScheduleEntries, Instructors],
   editor: lexicalEditor(),
+  graphQL: {
+    disable: true,
+  },
   onInit: seedUsers,
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {

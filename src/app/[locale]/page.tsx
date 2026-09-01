@@ -2,11 +2,14 @@ import { Fragment } from "react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Gallery from "@/components/Gallery";
+import Instructors from "@/components/Instructors";
 
 type Schedule = {
   day: string;
   rows: { weapon: string; time: string }[];
 };
+
+export const revalidate = 60;
 
 export default async function HomePage({
   params,
@@ -122,6 +125,8 @@ export default async function HomePage({
           </div>
         </div>
       </section>
+
+      <Instructors locale={locale} />
 
       <section className="py-16">
         <div className="container mx-auto px-4 text-center">
