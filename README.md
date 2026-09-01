@@ -1,9 +1,7 @@
 
-Website for our HEMA club
-
-- Static HTML
-- Tailwind CSS
-- Swiper for slides
+Saint Geoge Hema Club
+Tbilisi, Geogia
 
 Demo
-https://oleg-tgn.github.io/hema-club-geogia/
+https://hema-club-geogia.vercel.app/
+
