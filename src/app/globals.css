@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-serif: var(--font-merriweather), serif;
+}
+
+body {
+  font-family: var(--font-merriweather), serif;
+}
+
+.gallery-swiper .swiper-button-next::after,
+.gallery-swiper .swiper-button-prev::after {
+  color: white;
+  font-size: 2rem;
+}
+
+.gallery-swiper .swiper-pagination-bullet {
+  background: white !important;
+  opacity: 0.6;
+}
+
+.gallery-swiper .swiper-pagination-bullet-active {
+  opacity: 1 !important;
+  background: white !important;
+}
