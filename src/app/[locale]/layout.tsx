@@ -9,6 +9,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { ActiveSectionProvider } from "@/components/ActiveSectionProvider";
 import "../globals.css";
 
@@ -63,7 +64,8 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <ActiveSectionProvider>
             <Header />
-            <main className="container px-10">{children}</main>
+            <main className="container px-10 flex-1">{children}</main>
+            <Footer />
           </ActiveSectionProvider>
         </NextIntlClientProvider>
       </body>

@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useActiveSection } from "./ActiveSectionProvider";
 import LocaleSwitcher from "./LocaleSwitcher";
+import Logo from "./Logo";
 
 const menuLinks = [
   { href: "/#about", labelKey: "about", section: "about" },
@@ -49,8 +50,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 container bg-paper-100 px-10">
       <div className="py-4 flex justify-between">
-        <Link href="/" className="font-bold">
-          St. George&apos;s HEMA School
+        <Link href="/" className="group">
+          <Logo className="h-5 w-auto" />
         </Link>
         <nav className="flex gap-8">
           {menuLinks.map(({ href, labelKey, section }) => (

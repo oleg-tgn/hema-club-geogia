@@ -1,6 +1,5 @@
 import { Fragment } from "react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import Image from "next/image";
 import Gallery from "@/components/Gallery";
 import Instructors from "@/components/Instructors";
 import SectionObserver from "@/components/SectionObserver";
@@ -20,7 +19,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const tAbout = await getTranslations("About");
   const tTraining = await getTranslations("Training");
   const tGallery = await getTranslations("Gallery");
-  const tContact = await getTranslations("Contact");
 
   const schedule: Schedule[] = [
     {
@@ -77,7 +75,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </SectionObserver>
 
-      <SectionObserver id="schedule" className="w-full bg-gray-100 py-16">
+      <SectionObserver id="schedule" className="w-full py-16">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-10">
             {tTraining("title")}
@@ -135,44 +133,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           <Gallery />
         </div>
       </SectionObserver>
-
-      <section className="w-full">
-        <div className="relative w-full h-[300px] group">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d744.6156340035722!2d44.80343762855536!3d41.71053699819631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40440d872b0021d1%3A0x8543fa4cb63dfe7c!2zRGFuY2Ug4YOq4YOU4YOZ4YOV4YOQIHN0dWRpbyB0YmlsaXNpIGhpcCBob3A!5e0!3m2!1sru!2sge!4v1749320896973!5m2!1sru!2sge"
-            className="absolute top-0 left-0 w-full h-full pointer-events-none group-hover:pointer-events-auto"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
-      </section>
-
-      <section id="contact" className="w-full bg-gray-900 text-white py-16">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4">{tContact("title")}</h2>
-          <p className="mb-4">
-            {tContact("address")}
-            <br />
-            <Image
-              src="/images/inst.svg"
-              alt="instagram"
-              width={20}
-              height={20}
-              className="inline-block w-5 h-5 mr-2"
-            />
-            <a
-              href="https://instagram.com/st.george_hema_school"
-              className="text-red-400 hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {tContact("instagram")}
-            </a>
-          </p>
-        </div>
-      </section>
     </>
   );
 }
