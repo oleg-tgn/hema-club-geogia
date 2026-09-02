@@ -1,6 +1,7 @@
 "use client";
 
 import { useLocale } from "next-intl";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { routing } from "@/i18n/routing";
 import { usePathname, useRouter } from "@/i18n/navigation";
 
@@ -16,20 +17,41 @@ export default function LocaleSwitcher() {
   const router = useRouter();
 
   return (
-    <div className="flex gap-2">
-      {routing.locales.map((loc) => (
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <button
-          key={loc}
-          onClick={() => router.replace(pathname, { locale: loc })}
-          className={`px-2 py-1 text-sm rounded transition ${
-            loc === locale
-              ? "bg-red-600 text-white"
-              : "text-gray-200 hover:text-white"
-          }`}
+          className="flex items-center gap-1 text-sm font-semibold text-asphalt outline-none hover:text-night"
+          aria-label="Change language"
         >
-          {labels[loc]}
+          {labels[locale]}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path
+              d="M11.3535 7.35352L8 10.707L4.64648 7.35352L5.35352 6.64648L8 9.29297L10.6465 6.64648L11.3535 7.35352Z"
+              fill="#A19D97"
+            />
+          </svg>
         </button>
-      ))}
-    </div>
+      </DropdownMenu.Trigger>
+
+      <DropdownMenu.Portal>
+        <DropdownMenu.Content
+          align="end"
+          sideOffset={8}
+          className="z-60 rounded-md border border-asphalt/20 bg-paper-100 py-1 px-2 shadow-lg"
+        >
+          {routing.locales.map((loc) => (
+            <DropdownMenu.Item
+              key={loc}
+              onSelect={() => router.replace(pathname, { locale: loc })}
+              className={`cursor-pointer px-3 py-1.5 text-sm font-semibold outline-none transition-colors ${
+                loc === locale ? "text-night" : "text-asphalt hover:text-night"
+              }`}
+            >
+              {labels[loc]}
+            </DropdownMenu.Item>
+          ))}
+        </DropdownMenu.Content>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Root>
   );
 }

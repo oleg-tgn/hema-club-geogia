@@ -1,3 +1,4 @@
+import dns from "dns";
 import path from "path";
 import { fileURLToPath } from "url";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
@@ -14,6 +15,12 @@ import { Instructors } from "./collections/Instructors";
 import { seedUsers } from "./seed";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Node's own DNS resolver sometimes picks an unreachable nameserver on this
+// machine (e.g. a disconnected VPN/Hyper-V adapter), causing the SRV lookup
+// for mongodb+srv:// to fail with ECONNREFUSED even though the OS resolver
+// works fine. Force a known-good resolver for Node's queries.
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 export default buildConfig({
   admin: {
@@ -34,8 +41,8 @@ export default buildConfig({
   }),
   sharp,
   localization: {
-    locales: ["ru", "ka", "en"],
-    defaultLocale: "ru",
+    locales: ["en", "ka", "ru"],
+    defaultLocale: "en",
   },
   plugins: [
     s3Storage({

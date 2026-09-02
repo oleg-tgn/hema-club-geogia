@@ -1,11 +1,30 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-serif: var(--font-merriweather), serif;
+  --font-sans: var(--font-manrope), sans-serif;
+  --font-serif: var(--font-libertinus-serif-display), serif;
+}
+
+@theme {
+  --color-paper-100: #efebe2;
+  --color-asphalt: #777571;
+  --color-night: #141413;
+  --color-gold-100: #c4a043;
+  --color-off-white: #e4e4e4;
+}
+
+html[lang="ka"] {
+  --font-sans: var(--font-noto-sans-georgian), sans-serif;
+  --font-serif: var(--font-noto-serif-georgian), serif;
+}
+
+html {
+  --header-height: 66px;
+  scroll-padding-top: var(--header-height);
 }
 
 body {
-  font-family: var(--font-merriweather), serif;
+  font-family: var(--font-sans);
 }
 
 .gallery-swiper .swiper-button-next::after,
