@@ -5,9 +5,20 @@
   --font-serif: var(--font-libertinus-serif-display), serif;
 }
 
+@theme {
+  --color-paper-100: #efebe2;
+  --color-asphalt: #777571;
+  --color-night: #141413;
+  --color-gold-100: #c4a043;
+}
+
 html[lang="ka"] {
   --font-sans: var(--font-noto-sans-georgian), sans-serif;
   --font-serif: var(--font-noto-serif-georgian), serif;
+}
+
+html {
+  scroll-padding-top: 4rem;
 }
 
 body {

@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Gallery from "@/components/Gallery";
 import Instructors from "@/components/Instructors";
+import SectionObserver from "@/components/SectionObserver";
 
 type Schedule = {
   day: string;
@@ -11,9 +12,7 @@ type Schedule = {
 
 export const revalidate = 60;
 
-export default async function HomePage({
-  params,
-}: PageProps<"/[locale]">) {
+export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
   setRequestLocale(locale);
 
@@ -49,7 +48,7 @@ export default async function HomePage({
   return (
     <>
       <section
-        className="text-white py-20 relative bg-cover bg-center bg-no-repeat"
+        className="w-full text-white py-20 relative bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: "url('/images/hero.jpg')" }}
       >
         <div className="absolute inset-0 bg-black/70" />
@@ -71,15 +70,15 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="container mx-auto px-4 text-center">
+      <SectionObserver id="about" className="w-full py-16">
+        <div className="text-center">
           <h2 className="text-3xl font-bold mb-4">{tAbout("title")}</h2>
           <p className="text-lg max-w-2xl mx-auto">{tAbout("text")}</p>
         </div>
-      </section>
+      </SectionObserver>
 
-      <section className="bg-gray-100 py-16">
-        <div className="max-w-4xl mx-auto px-4">
+      <SectionObserver id="schedule" className="w-full bg-gray-100 py-16">
+        <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-10">
             {tTraining("title")}
           </h2>
@@ -124,16 +123,18 @@ export default async function HomePage({
             </div>
           </div>
         </div>
-      </section>
+      </SectionObserver>
 
-      <Instructors locale={locale} />
+      <SectionObserver id="instructors">
+        <Instructors locale={locale} />
+      </SectionObserver>
 
-      <section className="py-16">
-        <div className="container mx-auto px-4 text-center">
+      <SectionObserver id="gallery" className="w-full py-16">
+        <div className="text-center">
           <h2 className="text-3xl font-bold mb-6">{tGallery("title")}</h2>
           <Gallery />
         </div>
-      </section>
+      </SectionObserver>
 
       <section className="w-full">
         <div className="relative w-full h-[300px] group">
@@ -148,8 +149,8 @@ export default async function HomePage({
         </div>
       </section>
 
-      <section id="contact" className="bg-gray-900 text-white py-16">
-        <div className="container mx-auto px-4 text-center">
+      <section id="contact" className="w-full bg-gray-900 text-white py-16">
+        <div className="text-center">
           <h2 className="text-3xl font-bold mb-4">{tContact("title")}</h2>
           <p className="mb-4">
             {tContact("address")}

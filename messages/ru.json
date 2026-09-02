@@ -1,8 +1,11 @@
 {
   "Nav": {
-    "home": "Главная",
     "about": "О нас",
-    "tournament": "Турнир",
+    "schedule": "Расписание и адрес",
+    "weapons": "Оружие",
+    "instructors": "Инструкторы",
+    "gallery": "Галерея",
+    "tournaments": "Турниры",
     "join": "Вступить"
   },
   "Hero": {

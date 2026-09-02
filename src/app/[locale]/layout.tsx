@@ -9,6 +9,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Header from "@/components/Header";
+import { ActiveSectionProvider } from "@/components/ActiveSectionProvider";
 import "../globals.css";
 
 const manrope = Manrope({
@@ -58,10 +59,12 @@ export default async function LocaleLayout({
       lang={locale}
       className={`${manrope.variable} ${libertinusSerifDisplay.variable} ${notoSansGeorgian.variable} ${notoSerifGeorgian.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col bg-gray-50 text-gray-800">
+      <body className="min-h-full flex flex-col bg-paper-100 text-black">
         <NextIntlClientProvider>
-          <Header />
-          <main className="flex-1">{children}</main>
+          <ActiveSectionProvider>
+            <Header />
+            <main className="container px-10">{children}</main>
+          </ActiveSectionProvider>
         </NextIntlClientProvider>
       </body>
     </html>

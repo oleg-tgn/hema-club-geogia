@@ -1,8 +1,11 @@
 {
   "Nav": {
-    "home": "Home",
     "about": "About",
-    "tournament": "Tournament",
+    "schedule": "Schedule and address",
+    "weapons": "Weapons",
+    "instructors": "Instructors",
+    "gallery": "Gallery",
+    "tournaments": "Tournaments",
     "join": "Join"
   },
   "Hero": {
