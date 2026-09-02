@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import Gallery from "@/components/Gallery";
+import Hero from "@/components/Hero";
 import Instructors from "@/components/Instructors";
 import SectionObserver from "@/components/SectionObserver";
 
@@ -15,7 +16,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const tHero = await getTranslations("Hero");
   const tAbout = await getTranslations("About");
   const tTraining = await getTranslations("Training");
   const tGallery = await getTranslations("Gallery");
@@ -45,28 +45,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
 
   return (
     <>
-      <section
-        className="w-full text-white py-20 relative bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/images/hero.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black/70" />
-        <div className="relative z-10 flex items-center justify-center h-full text-center text-white px-4">
-          <div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              {tHero("title")}
-            </h1>
-            <p className="text-xl mb-6">{tHero("subtitle")}</p>
-            <a
-              href="https://ig.me/m/st.george_hema_school"
-              className="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded transition"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {tHero("cta")}
-            </a>
-          </div>
-        </div>
-      </section>
+      <Hero />
 
       <SectionObserver id="about" className="w-full py-16">
         <div className="text-center">

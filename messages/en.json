@@ -10,8 +10,14 @@
   },
   "Hero": {
     "title": "Saint George's HEMA School",
-    "subtitle": "Historical European Martial Arts (HEMA)",
-    "cta": "Join"
+    "description": "We study and practice the fighting systems recorded in historical treatises, guided by the same manuals used by masters of old.",
+    "ctaJoin": "Join Club",
+    "ctaAbout": "About HEMA",
+    "weapons": {
+      "longsword": "Longsword",
+      "saber": "Saber",
+      "rapier": "Rapier"
+    }
   },
   "About": {
     "title": "About",

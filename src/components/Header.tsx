@@ -49,7 +49,7 @@ export default function Header() {
   const currentSection = pathname === "/" ? activeSection : null;
 
   return (
-    <header className="sticky top-0 z-50 container bg-paper-100 px-10">
+    <header className="sticky top-0 z-50 container mx-auto bg-paper-100 px-10">
       <div className="py-4 flex items-center justify-between">
         <Link href="/" className="group">
           <Logo className="h-5 w-auto" />

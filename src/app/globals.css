@@ -10,6 +10,7 @@
   --color-asphalt: #777571;
   --color-night: #141413;
   --color-gold-100: #c4a043;
+  --color-off-white: #e4e4e4;
 }
 
 html[lang="ka"] {
@@ -18,7 +19,8 @@ html[lang="ka"] {
 }
 
 html {
-  scroll-padding-top: 4rem;
+  --header-height: 66px;
+  scroll-padding-top: var(--header-height);
 }
 
 body {
