@@ -41,8 +41,8 @@ export default buildConfig({
   }),
   sharp,
   localization: {
-    locales: ["ru", "ka", "en"],
-    defaultLocale: "ru",
+    locales: ["en", "ka", "ru"],
+    defaultLocale: "en",
   },
   plugins: [
     s3Storage({
