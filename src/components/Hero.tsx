@@ -8,7 +8,7 @@ export default async function Hero() {
     <section className="relative mb-4 flex h-[calc(100dvh-var(--header-height)-16px)] flex-col justify-between overflow-hidden rounded-[40px] p-10 text-white">
       <video
         className="absolute inset-0 h-full w-full object-cover"
-        src="/videos/hema-intro.webp"
+        src="/videos/hema-intro.webm"
         autoPlay
         muted
         loop

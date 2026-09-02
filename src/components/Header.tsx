@@ -70,9 +70,15 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 container mx-auto bg-paper-100 px-10">
       <div className="py-4 flex items-center justify-between">
-        <Link href="/" className="group">
-          <Logo className="h-5 w-auto" />
-        </Link>
+        {isHome ? (
+          <a href="#" className="group">
+            <Logo className="h-5 w-auto" />
+          </a>
+        ) : (
+          <Link href="/" className="group">
+            <Logo className="h-5 w-auto" />
+          </Link>
+        )}
         <nav className="flex items-center gap-8">
           {menuLinks.map(({ href, labelKey, section }) => (
             <MenuLink
