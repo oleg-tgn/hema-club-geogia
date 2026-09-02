@@ -1,10 +1,17 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 
 type ActiveSectionContextValue = {
   activeSection: string | null;
-  setActiveSection: (id: string) => void;
+  setActiveSection: Dispatch<SetStateAction<string | null>>;
 };
 
 const ActiveSectionContext = createContext<ActiveSectionContextValue | null>(

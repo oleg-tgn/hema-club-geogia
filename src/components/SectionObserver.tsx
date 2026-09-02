@@ -16,7 +16,11 @@ export default function SectionObserver({
   const { ref } = useInView({
     rootMargin: "-45% 0px -50% 0px",
     onChange: (inView) => {
-      if (inView) setActiveSection(id);
+      if (inView) {
+        setActiveSection(id);
+      } else {
+        setActiveSection((current) => (current === id ? null : current));
+      }
     },
   });
 
