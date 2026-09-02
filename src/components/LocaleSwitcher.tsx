@@ -37,7 +37,7 @@ export default function LocaleSwitcher() {
         <DropdownMenu.Content
           align="end"
           sideOffset={8}
-          className="rounded-md border border-asphalt/20 bg-paper-100 py-1 px-2 shadow-lg"
+          className="z-60 rounded-md border border-asphalt/20 bg-paper-100 py-1 px-2 shadow-lg"
         >
           {routing.locales.map((loc) => (
             <DropdownMenu.Item
