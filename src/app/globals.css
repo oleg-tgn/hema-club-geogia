@@ -1,11 +1,17 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-serif: var(--font-merriweather), serif;
+  --font-sans: var(--font-manrope), sans-serif;
+  --font-serif: var(--font-libertinus-serif-display), serif;
+}
+
+html[lang="ka"] {
+  --font-sans: var(--font-noto-sans-georgian), sans-serif;
+  --font-serif: var(--font-noto-serif-georgian), serif;
 }
 
 body {
-  font-family: var(--font-merriweather), serif;
+  font-family: var(--font-sans);
 }
 
 .gallery-swiper .swiper-button-next::after,

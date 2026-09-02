@@ -1,15 +1,37 @@
 import type { Metadata } from "next";
-import { Merriweather } from "next/font/google";
+import {
+  Manrope,
+  Libertinus_Serif_Display,
+  Noto_Sans_Georgian,
+  Noto_Serif_Georgian,
+} from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Header from "@/components/Header";
 import "../globals.css";
 
-const merriweather = Merriweather({
-  variable: "--font-merriweather",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin", "cyrillic"],
-  weight: ["400", "700"],
+});
+
+const libertinusSerifDisplay = Libertinus_Serif_Display({
+  variable: "--font-libertinus-serif-display",
+  weight: "400",
+  subsets: ["latin", "cyrillic"],
+  adjustFontFallback: false,
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
+
+const notoSansGeorgian = Noto_Sans_Georgian({
+  variable: "--font-noto-sans-georgian",
+  subsets: ["georgian"],
+});
+
+const notoSerifGeorgian = Noto_Serif_Georgian({
+  variable: "--font-noto-serif-georgian",
+  subsets: ["georgian"],
 });
 
 export const metadata: Metadata = {
@@ -32,7 +54,10 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale} className={`${merriweather.variable} h-full`}>
+    <html
+      lang={locale}
+      className={`${manrope.variable} ${libertinusSerifDisplay.variable} ${notoSansGeorgian.variable} ${notoSerifGeorgian.variable} h-full`}
+    >
       <body className="min-h-full flex flex-col bg-gray-50 text-gray-800">
         <NextIntlClientProvider>
           <Header />
