@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
+import CtaTile from "./CtaTile";
 import HeroLogo from "./HeroLogo";
+import WeaponsPanel from "./WeaponsPanel";
 
 export default async function Hero() {
   const t = await getTranslations("Hero");
@@ -31,7 +33,16 @@ export default async function Hero() {
           <p className="text-base font-normal text-off-white">
             {t("description")}
           </p>
+          <div className="mt-6 flex h-22 gap-2">
+            <CtaTile href="#schedule" size="lg" className="flex-[6.5_0_0]">
+              {t.rich("ctaJoin", { br: () => <br /> })}
+            </CtaTile>
+            <CtaTile href="#schedule" size="sm" className="flex-[3.5_0_0]">
+              {t.rich("ctaSchedule", { br: () => <br /> })}
+            </CtaTile>
+          </div>
         </div>
+        <WeaponsPanel />
       </div>
     </section>
   );

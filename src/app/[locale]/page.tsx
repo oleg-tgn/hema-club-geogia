@@ -3,7 +3,6 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import Gallery from "@/components/Gallery";
 import Hero from "@/components/Hero";
 import Instructors from "@/components/Instructors";
-import SectionObserver from "@/components/SectionObserver";
 
 type Schedule = {
   day: string;
@@ -47,14 +46,14 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       <Hero />
 
-      <SectionObserver id="about" className="w-full py-16">
+      <section id="about" className="w-full py-16">
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-4">{tAbout("title")}</h2>
           <p className="text-lg max-w-2xl mx-auto">{tAbout("text")}</p>
         </div>
-      </SectionObserver>
+      </section>
 
-      <SectionObserver id="schedule" className="w-full py-16">
+      <section id="schedule" className="w-full py-16">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-10">
             {tTraining("title")}
@@ -100,18 +99,41 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             </div>
           </div>
         </div>
-      </SectionObserver>
+      </section>
 
-      <SectionObserver id="instructors">
+      <section id="weapons" className="w-full py-16">
+        <div className="text-center gap-6 py-10">
+          <h2 className="text-3xl font-bold">Weapons</h2>
+          <p className="text-xl">
+            Our club provides all training steel — longswords, rapiers, sabres,
+            and sword & buckler.
+          </p>
+          <p className="text-xl">
+            We also provide protective gear — armor and fencing masks.
+          </p>
+        </div>
+      </section>
+
+      <section id="instructors">
         <Instructors locale={locale} />
-      </SectionObserver>
+      </section>
 
-      <SectionObserver id="gallery" className="w-full py-16">
+      <section id="gallery" className="w-full py-16">
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-6">{tGallery("title")}</h2>
           <Gallery />
         </div>
-      </SectionObserver>
+      </section>
+
+      <section id="join" className="w-full py-16">
+        <div className="text-center gap-6 py-10">
+          <h2 className="text-3xl font-bold">Join the club</h2>
+          <p className="text-xl">
+            To join, message us on Instagram or just drop by the gym during any
+            of our scheduled class times.
+          </p>
+        </div>
+      </section>
     </>
   );
 }
