@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
-import { JOIN_URL } from "@/lib/constants";
 import CtaTile from "./CtaTile";
 import HeroLogo from "./HeroLogo";
+import WeaponsPanel from "./WeaponsPanel";
 
 export default async function Hero() {
   const t = await getTranslations("Hero");
@@ -42,6 +42,7 @@ export default async function Hero() {
             </CtaTile>
           </div>
         </div>
+        <WeaponsPanel />
       </div>
     </section>
   );
