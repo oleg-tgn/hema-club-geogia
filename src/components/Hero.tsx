@@ -1,4 +1,6 @@
 import { getTranslations } from "next-intl/server";
+import { JOIN_URL } from "@/lib/constants";
+import CtaTile from "./CtaTile";
 import HeroLogo from "./HeroLogo";
 
 export default async function Hero() {
@@ -31,6 +33,14 @@ export default async function Hero() {
           <p className="text-base font-normal text-off-white">
             {t("description")}
           </p>
+          <div className="mt-6 flex h-22 gap-2">
+            <CtaTile href={JOIN_URL} size="lg" external grow={7}>
+              {t.rich("ctaJoin", { br: () => <br /> })}
+            </CtaTile>
+            <CtaTile href="#about" size="sm" grow={3}>
+              {t.rich("ctaAbout", { br: () => <br /> })}
+            </CtaTile>
+          </div>
         </div>
       </div>
     </section>
