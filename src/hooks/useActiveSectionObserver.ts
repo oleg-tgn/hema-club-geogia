@@ -9,7 +9,7 @@ import { useEffect } from "react";
 export function useActiveSectionObserver(
   sectionIds: readonly string[],
   enabled: boolean,
-  onChange: (id: string) => void,
+  onChange: (id: string | null) => void,
 ) {
   useEffect(() => {
     if (!enabled) return;
@@ -47,7 +47,7 @@ export function useActiveSectionObserver(
           }
         }
 
-        if (bestId) onChange(bestId);
+        onChange(bestId);
       },
       {
         rootMargin: `-${headerHeight}px 0px -60% 0px`,

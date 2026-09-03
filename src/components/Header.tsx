@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useActiveSectionObserver } from "@/hooks/useActiveSectionObserver";
@@ -27,12 +28,14 @@ function MenuLink({
   section,
   isHome,
   className,
+  onNavigate,
   children,
 }: {
   href: string;
   section: string | null;
   isHome: boolean;
   className: string;
+  onNavigate?: (section: string) => void;
   children: React.ReactNode;
 }) {
   // On the home page, section anchors are plain in-page links: the browser
@@ -40,7 +43,11 @@ function MenuLink({
   // next/link's client router thinks the URL hasn't changed.
   if (section !== null && isHome) {
     return (
-      <a href={`#${section}`} className={className}>
+      <a
+        href={`#${section}`}
+        className={className}
+        onClick={section ? () => onNavigate?.(section) : undefined}
+      >
         {children}
       </a>
     );
@@ -57,10 +64,12 @@ function Nav({
   pathname,
   currentSection,
   isHome,
+  onNavigate,
 }: {
   pathname: string;
   currentSection: string | null;
   isHome: boolean;
+  onNavigate: (section: string) => void;
 }) {
   const t = useTranslations("Nav");
 
@@ -77,6 +86,7 @@ function Nav({
             href={href}
             section={section}
             isHome={isHome}
+            onNavigate={onNavigate}
             className={`group relative text-base leading-6 font-semibold text-asphalt hover:text-night ${
               isActive ? "text-night" : ""
             }`}
@@ -103,7 +113,51 @@ export default function Header() {
   const isHome = pathname === "/";
   const currentSection = isHome ? activeSection : null;
 
-  useActiveSectionObserver(sectionIds, isHome, setActiveSection);
+  // While a click-triggered scroll is in flight, the IntersectionObserver
+  // passes through every section between the old and new position, which
+  // would otherwise flash the nav highlight across them one by one.
+  const isNavigatingRef = useRef(false);
+
+  const handleObserverChange = useCallback(
+    (id: string | null) => {
+      if (!isNavigatingRef.current) setActiveSection(id);
+    },
+    [setActiveSection],
+  );
+
+  useActiveSectionObserver(sectionIds, isHome, handleObserverChange);
+
+  const handleNavigate = useCallback(
+    (section: string) => {
+      setActiveSection(section);
+      isNavigatingRef.current = true;
+
+      const clearFlag = () => {
+        isNavigatingRef.current = false;
+        window.removeEventListener("scrollend", clearFlag);
+      };
+
+      if ("onscrollend" in window) {
+        window.addEventListener("scrollend", clearFlag, { once: true });
+      } else {
+        setTimeout(clearFlag, 800);
+      }
+    },
+    [setActiveSection],
+  );
+
+  // A hard navigation (typed URL, link from another site) lands with the
+  // hash already in place: the browser jumps there natively before this
+  // component ever sees a click, so the same flicker needs to be suppressed
+  // here too.
+  useEffect(() => {
+    if (!isHome) return;
+
+    const hash = window.location.hash.slice(1);
+    if ((sectionIds as readonly string[]).includes(hash)) {
+      handleNavigate(hash);
+    }
+  }, [isHome, handleNavigate]);
 
   return (
     <header className="sticky top-0 z-50 container mx-auto bg-paper-100 px-10">
@@ -115,6 +169,7 @@ export default function Header() {
           pathname={pathname}
           currentSection={currentSection}
           isHome={isHome}
+          onNavigate={handleNavigate}
         />
         <div className="flex items-center gap-4">
           <LocaleSwitcher />
@@ -123,6 +178,7 @@ export default function Header() {
             href="#join"
             section="join"
             isHome={isHome}
+            onNavigate={handleNavigate}
             className="flex h-8.5 items-center justify-center rounded-3xl border border-asphalt px-4 text-base leading-6 font-semibold text-night transition-colors hover:bg-night/5"
           >
             {t("join")}
