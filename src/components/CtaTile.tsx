@@ -6,7 +6,7 @@ type CtaTileProps = {
   children: React.ReactNode;
   size: "lg" | "sm";
   external?: boolean;
-  grow?: number;
+  className?: string;
 };
 
 // ru/ka translations run longer than en, so those locales get the next
@@ -30,7 +30,7 @@ export default async function CtaTile({
   children,
   size,
   external = false,
-  grow = 1,
+  className = "",
 }: CtaTileProps) {
   const locale = await getLocale();
   const sizeClass =
@@ -40,17 +40,20 @@ export default async function CtaTile({
     <a
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      style={{ flex: `${grow} 0 0` }}
-      className="group @container flex h-full flex-col items-end justify-between overflow-hidden rounded-lg border border-gold-200 text-gold-200 transition-colors hover:border-gold-100 hover:text-gold-100"
+      className={`group relative flex h-full w-full flex-col items-end justify-between overflow-hidden rounded-lg border border-gold-200 text-gold-200 transition-colors duration-300 hover:border-gold-100 hover:text-gold-100 ${className}`}
     >
-      <span className="mt-1 mr-1">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gold-200/0 transition-colors duration-300 group-hover:bg-gold-200/10"
+      />
+      <span className="relative mt-1 mr-1">
         <ArrowIcon
           external={external}
-          className="text-gold-200 group-hover:text-gold-100"
+          className={`text-gold-200 transition-transform duration-300 group-hover:text-gold-100 ${external ? "group-hover:translate-x-1 group-hover:-translate-y-1" : "group-hover:translate-x-1"}`}
         />
       </span>
       <span
-        className={`w-max mb-3 px-2.5 self-start lining-nums proportional-nums transition-transform duration-300 group-hover:translate-x-[calc(100cqw-100%)] ${sizeClass}`}
+        className={`relative mb-3 w-max self-start px-2.5 lining-nums proportional-nums ${sizeClass}`}
       >
         {children}
       </span>
