@@ -1,4 +1,12 @@
-import type { CollectionConfig } from "payload";
+import type { CollectionConfig, TextFieldSingleValidation } from "payload";
+
+const validateTitle: TextFieldSingleValidation = (value, { siblingData }) => {
+  const data = siblingData as { weapon?: unknown };
+  if (!data?.weapon && !value) {
+    return "Title is required when no weapon is set.";
+  }
+  return true;
+};
 
 export const ScheduleEntries: CollectionConfig = {
   slug: "schedule-entries",
@@ -9,7 +17,7 @@ export const ScheduleEntries: CollectionConfig = {
   defaultSort: "order",
   admin: {
     useAsTitle: "day",
-    defaultColumns: ["day", "weapon", "startTime", "endTime"],
+    defaultColumns: ["day", "weapon", "title", "level", "startTime", "endTime"],
   },
   access: {
     read: () => true,
@@ -18,6 +26,38 @@ export const ScheduleEntries: CollectionConfig = {
     delete: ({ req }) => Boolean(req.user),
   },
   fields: [
+    {
+      name: "weapon",
+      type: "relationship",
+      relationTo: "weapons",
+      admin: {
+        description:
+          "Card this entry belongs to. Leave empty for entries with no weapon (e.g. Sparrings) — set Title below instead.",
+      },
+    },
+    {
+      name: "title",
+      type: "text",
+      localized: true,
+      admin: {
+        description:
+          "Card label used when Weapon is empty (e.g. \"Sparrings\"). Ignored when a weapon is set — the weapon's name is used instead.",
+        condition: (data) => !data?.weapon,
+      },
+      validate: validateTitle,
+    },
+    {
+      name: "level",
+      type: "select",
+      options: [
+        { label: "Beginners", value: "beginners" },
+        { label: "Advanced", value: "advanced" },
+      ],
+      admin: {
+        description:
+          "Optional sub-group within the card (e.g. Beginners / Advanced for Longsword). Leave empty if the card has no split.",
+      },
+    },
     {
       name: "day",
       type: "select",
@@ -31,12 +71,6 @@ export const ScheduleEntries: CollectionConfig = {
         { label: "Saturday", value: "saturday" },
         { label: "Sunday", value: "sunday" },
       ],
-    },
-    {
-      name: "weapon",
-      type: "relationship",
-      relationTo: "weapons",
-      required: true,
     },
     {
       name: "startTime",
@@ -55,7 +89,8 @@ export const ScheduleEntries: CollectionConfig = {
       type: "number",
       defaultValue: 0,
       admin: {
-        description: "Controls display order within a day.",
+        description:
+          "Controls row order within the card, and — via the lowest value in each card's group — the card's position in the schedule grid.",
       },
     },
   ],
