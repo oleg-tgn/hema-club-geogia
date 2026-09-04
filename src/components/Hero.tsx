@@ -37,8 +37,8 @@ export default async function Hero() {
             <CtaTile href="#schedule" size="lg" className="flex-[6.5_0_0]">
               {t.rich("ctaJoin", { br: () => <br /> })}
             </CtaTile>
-            <CtaTile href="#schedule" size="sm" className="flex-[3.5_0_0]">
-              {t.rich("ctaSchedule", { br: () => <br /> })}
+            <CtaTile href="#about" size="sm" className="flex-[3.5_0_0]">
+              {t.rich("ctaAbout", { br: () => <br /> })}
             </CtaTile>
           </div>
         </div>
