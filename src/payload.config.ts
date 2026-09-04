@@ -12,6 +12,7 @@ import { Media } from "./collections/Media";
 import { Weapons } from "./collections/Weapons";
 import { ScheduleEntries } from "./collections/ScheduleEntries";
 import { Instructors } from "./collections/Instructors";
+import { About } from "./globals/About";
 import { seedUsers } from "./seed";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -27,6 +28,7 @@ export default buildConfig({
     user: Users.slug,
   },
   collections: [Users, Media, Weapons, ScheduleEntries, Instructors],
+  globals: [About],
   editor: lexicalEditor(),
   graphQL: {
     disable: true,
