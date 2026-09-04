@@ -36,32 +36,23 @@ type WeaponRef = {
 };
 
 type ScheduleRow = {
-  level?: Level | null;
   day: Day;
   startTime: string;
   endTime: string;
 };
 
-type ScheduleGroupDoc = {
-  id: string;
-  weapon?: WeaponRef | string | null;
-  title?: string | null;
+type ScheduleSection = {
+  level?: Level | null;
   rows?: ScheduleRow[] | null;
 };
 
-function groupRowsByLevel(rows: ScheduleRow[]) {
-  const byLevel = new Map<string, ScheduleRow[]>();
-  for (const row of rows) {
-    const key = row.level ?? "";
-    const bucket = byLevel.get(key) ?? [];
-    bucket.push(row);
-    byLevel.set(key, bucket);
-  }
-  return Array.from(byLevel.entries()).map(([level, levelRows]) => ({
-    level: (level || null) as Level | null,
-    rows: levelRows,
-  }));
-}
+type ScheduleGroupDoc = {
+  id: string;
+  slug: string;
+  weapon?: WeaponRef | string | null;
+  title?: string | null;
+  sections?: ScheduleSection[] | null;
+};
 
 function ScheduleCard({
   doc,
@@ -74,7 +65,7 @@ function ScheduleCard({
 }) {
   const weapon =
     doc.weapon && typeof doc.weapon === "object" ? doc.weapon : null;
-  const levelGroups = groupRowsByLevel(doc.rows ?? []);
+  const sections = doc.sections ?? [];
 
   return (
     <div
@@ -95,15 +86,15 @@ function ScheduleCard({
         {weapon?.name}
       </Heading>
       <div className="mt-4 flex flex-col divide-y divide-night/20 border-t border-night/20">
-        {levelGroups.map((group, i) => (
-          <div key={group.level ?? i} className="flex flex-col gap-2 py-4">
-            {group.level && (
+        {sections.map((section, i) => (
+          <div key={section.level ?? i} className="flex flex-col gap-2 py-4">
+            {section.level && (
               <span className="font-semibold text-night">
-                {t(`levels.${group.level}`)}
+                {t(`levels.${section.level}`)}
               </span>
             )}
             <div className="grid grid-cols-[1fr_auto] gap-x-6 gap-y-1 text-night">
-              {group.rows.map((row, idx) => (
+              {(section.rows ?? []).map((row, idx) => (
                 <Fragment key={idx}>
                   <span className="text-md">{t(`days.${row.day}`)}</span>
                   <span className="text-right font-semibold tabular-nums">
@@ -120,13 +111,15 @@ function ScheduleCard({
 }
 
 function ScheduleFullRow({ doc, t }: { doc: ScheduleGroupDoc; t: TFunc }) {
+  const rows = (doc.sections ?? []).flatMap((section) => section.rows ?? []);
+
   return (
     <div className="flex flex-col gap-2 rounded-2xl border border-night/15 p-5 sm:flex-row sm:items-center sm:justify-between">
       <Heading variant="h3" className="text-night">
         {doc.title}
       </Heading>
       <div className="flex flex-col gap-1 text-sm text-night sm:items-end">
-        {(doc.rows ?? []).map((row, idx) => (
+        {rows.map((row, idx) => (
           <div key={idx} className="flex gap-4">
             <span className="text-md">{t(`days.${row.day}`)}</span>
             <span className="text-right font-semibold tabular-nums">
@@ -152,13 +145,10 @@ export default async function Schedule() {
   });
 
   const groups = docs as ScheduleGroupDoc[];
-  const weaponSlug = (doc: ScheduleGroupDoc) =>
-    doc.weapon && typeof doc.weapon === "object" ? doc.weapon.slug : null;
-
-  const longsword = groups.find((doc) => weaponSlug(doc) === "longsword");
-  const saber = groups.find((doc) => weaponSlug(doc) === "saber");
-  const rapier = groups.find((doc) => weaponSlug(doc) === "rapier");
-  const sparrings = groups.find((doc) => !doc.weapon);
+  const longsword = groups.find((doc) => doc.slug === "longsword");
+  const saber = groups.find((doc) => doc.slug === "saber");
+  const rapier = groups.find((doc) => doc.slug === "rapier");
+  const sparrings = groups.find((doc) => doc.slug === "sparrings");
 
   const hasSchedule = Boolean(longsword || saber || rapier || sparrings);
 
