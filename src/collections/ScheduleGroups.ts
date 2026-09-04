@@ -14,10 +14,9 @@ export const ScheduleGroups: CollectionConfig = {
     singular: "Schedule Card",
     plural: "Schedule Cards",
   },
-  defaultSort: "order",
   admin: {
     useAsTitle: "title",
-    defaultColumns: ["weapon", "title", "order"],
+    defaultColumns: ["weapon", "title"],
   },
   access: {
     read: () => true,
@@ -45,14 +44,6 @@ export const ScheduleGroups: CollectionConfig = {
         condition: (data) => !data?.weapon,
       },
       validate: validateTitle,
-    },
-    {
-      name: "order",
-      type: "number",
-      defaultValue: 0,
-      admin: {
-        description: "Controls the card's position in the schedule grid.",
-      },
     },
     {
       name: "rows",
