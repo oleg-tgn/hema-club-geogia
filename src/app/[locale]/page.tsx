@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import Gallery from "@/components/Gallery";
 import Hero from "@/components/Hero";
 import Instructors from "@/components/Instructors";
+import About from "@/components/About";
 
 type Schedule = {
   day: string;
@@ -15,7 +16,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const tAbout = await getTranslations("About");
   const tTraining = await getTranslations("Training");
   const tGallery = await getTranslations("Gallery");
 
@@ -46,11 +46,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
     <>
       <Hero />
 
-      <section id="about" className="w-full py-16">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-4">{tAbout("title")}</h2>
-          <p className="text-lg max-w-2xl mx-auto">{tAbout("text")}</p>
-        </div>
+      <section id="about">
+        <About />
       </section>
 
       <section id="schedule" className="w-full py-16">
