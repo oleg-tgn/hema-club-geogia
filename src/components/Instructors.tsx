@@ -1,5 +1,5 @@
 import config from "@payload-config";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { getPayload } from "payload";
 
 type SocialLink = {
@@ -33,7 +33,8 @@ const platformLabels: Record<string, string> = {
   youtube: "YouTube",
 };
 
-export default async function Instructors({ locale }: { locale: string }) {
+export default async function Instructors() {
+  const locale = await getLocale();
   const t = await getTranslations("Instructors");
   const payload = await getPayload({ config });
 
