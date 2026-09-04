@@ -115,7 +115,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       </section>
 
       <section id="instructors">
-        <Instructors locale={locale} />
+        <Instructors />
       </section>
 
       <section id="gallery" className="w-full py-16">

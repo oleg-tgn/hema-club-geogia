@@ -3,7 +3,11 @@ import createNextIntlPlugin from "next-intl/plugin";
 import { withPayload } from "@payloadcms/next/withPayload";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: process.env.R2_PUBLIC_URL
+      ? [new URL(`${process.env.R2_PUBLIC_URL}/**`)]
+      : [],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();

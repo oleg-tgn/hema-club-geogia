@@ -2,9 +2,10 @@ import type { CollectionConfig } from "payload";
 
 export const Weapons: CollectionConfig = {
   slug: "weapons",
+  defaultSort: "order",
   admin: {
     useAsTitle: "name",
-    defaultColumns: ["name", "slug"],
+    defaultColumns: ["name", "slug", "order"],
   },
   access: {
     read: () => true,
@@ -26,6 +27,23 @@ export const Weapons: CollectionConfig = {
       unique: true,
       admin: {
         description: "Stable identifier, e.g. 'longsword'. Not localized.",
+      },
+    },
+    {
+      name: "image",
+      type: "upload",
+      relationTo: "media",
+      admin: {
+        description:
+          "Displayed in the weapons panel on the homepage. Any size works — it's scaled to fit the layout.",
+      },
+    },
+    {
+      name: "order",
+      type: "number",
+      defaultValue: 0,
+      admin: {
+        description: "Controls display order in the weapons panel.",
       },
     },
   ],

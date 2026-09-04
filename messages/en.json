@@ -13,12 +13,7 @@
     "description": "We study and practice the fighting systems recorded in historical treatises, guided by the same manuals used by masters of old.",
     "ctaJoin": "Join Club",
     "ctaAbout": "About<br></br>HEMA",
-    "ctaSchedule": "Schedule",
-    "weapons": {
-      "longsword": "Longsword",
-      "saber": "Saber",
-      "rapier": "Rapier"
-    }
+    "ctaSchedule": "Schedule"
   },
   "About": {
     "title": "About",
