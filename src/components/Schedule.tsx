@@ -18,24 +18,39 @@ type Level = "beginners" | "advanced";
 
 type TFunc = Awaited<ReturnType<typeof getTranslations>>;
 
+const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false,
+  timeZone: "Asia/Tbilisi",
+});
+
+function formatTime(value: string): string {
+  return timeFormatter.format(new Date(value));
+}
+
 type WeaponRef = {
   id: string;
   name: string;
   slug: string;
 };
 
-type ScheduleEntryDoc = {
-  id: string;
-  weapon?: WeaponRef | string | null;
-  title?: string | null;
+type ScheduleRow = {
   level?: Level | null;
   day: Day;
   startTime: string;
   endTime: string;
-  order?: number | null;
 };
 
-type Row = { day: Day; startTime: string; endTime: string; order: number };
+type ScheduleGroupDoc = {
+  id: string;
+  weapon?: WeaponRef | string | null;
+  title?: string | null;
+  order?: number | null;
+  rows?: ScheduleRow[] | null;
+};
+
+type Row = { day: Day; startTime: string; endTime: string };
 type LevelGroup = { level: Level | null; rows: Row[] };
 type Card = {
   key: string;
@@ -45,64 +60,36 @@ type Card = {
   levelGroups: LevelGroup[];
 };
 
-function buildCards(entries: ScheduleEntryDoc[]): Card[] {
-  const groups = new Map<
-    string,
-    {
-      name: string;
-      weaponSlug?: string;
-      order: number;
-      rowsByLevel: Map<string, Row[]>;
-    }
-  >();
+function buildCards(docs: ScheduleGroupDoc[]): Card[] {
+  return docs
+    .map((doc) => {
+      const weapon =
+        doc.weapon && typeof doc.weapon === "object" ? doc.weapon : null;
 
-  for (const entry of entries) {
-    const weapon =
-      entry.weapon && typeof entry.weapon === "object" ? entry.weapon : null;
-    const key = weapon ? `weapon:${weapon.id}` : `title:${entry.title}`;
-    const order = entry.order ?? 0;
+      const rowsByLevel = new Map<string, Row[]>();
+      for (const row of doc.rows ?? []) {
+        const levelKey = row.level ?? "";
+        const rows = rowsByLevel.get(levelKey) ?? [];
+        rows.push({
+          day: row.day,
+          startTime: row.startTime,
+          endTime: row.endTime,
+        });
+        rowsByLevel.set(levelKey, rows);
+      }
 
-    let group = groups.get(key);
-    if (!group) {
-      group = {
-        name: weapon ? weapon.name : (entry.title ?? ""),
-        weaponSlug: weapon?.slug,
-        order,
-        rowsByLevel: new Map(),
-      };
-      groups.set(key, group);
-    }
-    group.order = Math.min(group.order, order);
-
-    const levelKey = entry.level ?? "";
-    const rows = group.rowsByLevel.get(levelKey) ?? [];
-    rows.push({
-      day: entry.day,
-      startTime: entry.startTime,
-      endTime: entry.endTime,
-      order,
-    });
-    group.rowsByLevel.set(levelKey, rows);
-  }
-
-  return Array.from(groups.values())
-    .map((group) => {
-      const levelGroups = Array.from(group.rowsByLevel.entries())
-        .map(([level, rows]) => {
-          const sortedRows = [...rows].sort((a, b) => a.order - b.order);
-          return {
-            level: (level || null) as Level | null,
-            rows: sortedRows,
-            minOrder: sortedRows[0]?.order ?? 0,
-          };
-        })
-        .sort((a, b) => a.minOrder - b.minOrder);
+      const levelGroups = Array.from(rowsByLevel.entries()).map(
+        ([level, rows]) => ({
+          level: (level || null) as Level | null,
+          rows,
+        }),
+      );
 
       return {
-        key: group.name,
-        name: group.name,
-        weaponSlug: group.weaponSlug,
-        order: group.order,
+        key: doc.id,
+        name: weapon ? weapon.name : (doc.title ?? ""),
+        weaponSlug: weapon?.slug,
+        order: doc.order ?? 0,
         levelGroups,
       };
     })
@@ -111,37 +98,35 @@ function buildCards(entries: ScheduleEntryDoc[]): Card[] {
 
 function ScheduleCard({ card, t }: { card: Card; t: TFunc }) {
   return (
-    <div className="flex flex-col gap-4 rounded-2xl border border-night/15 bg-paper-100/40 p-5">
-      <div className="flex items-center gap-3">
-        {card.weaponSlug && (
-          <div className="relative h-10 w-10 shrink-0">
-            <Image
-              src={`/images/weapons/${card.weaponSlug}.png`}
-              alt=""
-              aria-hidden
-              fill
-              className="object-contain"
-            />
-          </div>
-        )}
-        <Heading variant="h3" className="text-night">
-          {card.name}
-        </Heading>
-      </div>
-      <div className="grid gap-3">
+    <div className="mb-6 flex break-inside-avoid flex-col rounded-lg border border-night/25 p-6">
+      {card.weaponSlug && (
+        <div className="relative h-16 w-full">
+          <Image
+            src={`/images/weapons/${card.weaponSlug}.png`}
+            alt=""
+            aria-hidden
+            fill
+            className="object-contain object-left"
+          />
+        </div>
+      )}
+      <Heading variant="h3" className="mt-2 text-night">
+        {card.name}
+      </Heading>
+      <div className="mt-4 flex flex-col divide-y divide-night/20 border-t border-night/20">
         {card.levelGroups.map((group, i) => (
-          <div key={group.level ?? i} className="flex flex-col gap-1">
+          <div key={group.level ?? i} className="flex flex-col gap-2 py-4">
             {group.level && (
-              <span className="text-sm font-semibold tracking-wide text-gold-200 uppercase">
+              <span className="font-semibold text-night">
                 {t(`levels.${group.level}`)}
               </span>
             )}
-            <div className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-1 text-sm text-night">
+            <div className="grid grid-cols-[1fr_auto] gap-x-6 gap-y-1 text-night">
               {group.rows.map((row, idx) => (
                 <Fragment key={idx}>
                   <span>{t(`days.${row.day}`)}</span>
-                  <span className="text-right tabular-nums">
-                    {row.startTime} – {row.endTime}
+                  <span className="text-right font-semibold tabular-nums">
+                    {formatTime(row.startTime)} – {formatTime(row.endTime)}
                   </span>
                 </Fragment>
               ))}
@@ -166,7 +151,7 @@ function ScheduleFullRow({ card, t }: { card: Card; t: TFunc }) {
           <div key={idx} className="flex gap-4">
             <span>{t(`days.${row.day}`)}</span>
             <span className="tabular-nums">
-              {row.startTime} – {row.endTime}
+              {formatTime(row.startTime)} – {formatTime(row.endTime)}
             </span>
           </div>
         ))}
@@ -181,15 +166,15 @@ export default async function Schedule() {
   const payload = await getPayload({ config });
 
   const { docs } = await payload.find({
-    collection: "schedule-entries",
+    collection: "schedule-groups",
     depth: 2,
     limit: 100,
     locale: locale as "en" | "ka" | "ru",
     sort: "order",
   });
 
-  const entries = docs as ScheduleEntryDoc[];
-  const cards = buildCards(entries);
+  const groups = docs as ScheduleGroupDoc[];
+  const cards = buildCards(groups);
   const weaponCards = cards.filter((card) => card.weaponSlug);
   const plainCards = cards.filter((card) => !card.weaponSlug);
 
@@ -214,7 +199,7 @@ export default async function Schedule() {
         <div className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
           <div className="flex flex-col gap-4">
             {weaponCards.length > 0 && (
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="columns-1 gap-6 sm:columns-2">
                 {weaponCards.map((card) => (
                   <ScheduleCard key={card.key} card={card} t={t} />
                 ))}

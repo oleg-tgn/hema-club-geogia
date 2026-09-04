@@ -10,7 +10,7 @@ import sharp from "sharp";
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
 import { Weapons } from "./collections/Weapons";
-import { ScheduleEntries } from "./collections/ScheduleEntries";
+import { ScheduleGroups } from "./collections/ScheduleGroups";
 import { Instructors } from "./collections/Instructors";
 import { About } from "./globals/About";
 import { seedUsers } from "./seed";
@@ -27,7 +27,7 @@ export default buildConfig({
   admin: {
     user: Users.slug,
   },
-  collections: [Users, Media, Weapons, ScheduleEntries, Instructors],
+  collections: [Users, Media, Weapons, ScheduleGroups, Instructors],
   globals: [About],
   editor: lexicalEditor(),
   graphQL: {
